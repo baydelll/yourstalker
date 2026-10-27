@@ -1,0 +1,280 @@
+/* ГДЕ ТВОЙ СТАЛКЕР — HTML/CSS-реконструкция оригинального SVG-макета.
+   Все надписи являются настоящим текстом, все интерактивные элементы — HTML.
+   Палитра: #000 / #fff / #b12a2a / #28599e / #484848. */
+:root{color-scheme:dark;--black:#000;--white:#f3f3f3;--muted:#777;--red:#a62a2b;--blue:#285998;--bubble:#494949;--font:Arial,Helvetica,sans-serif;--vh:100dvh}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#000;color:var(--white);font-family:var(--font);-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+html{scrollbar-width:none}body{overflow:hidden}button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:2px solid #dcdcdc;outline-offset:5px}button[hidden]{display:none!important}::selection{background:#4a1717;color:#fff}
+#story{height:var(--vh);width:100%;transition:transform .75s cubic-bezier(.22,.7,.13,1);will-change:transform}
+.scene{position:relative;display:flex;isolation:isolate;width:100%;height:var(--vh);min-height:var(--vh);overflow:hidden;background:#000;scrollbar-width:none}
+.scene[aria-hidden="true"]{pointer-events:none}
+.accent{color:var(--red)}.sr-only{position:absolute!important;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden;white-space:nowrap}
+/* В макете преобладают большие чёрные поля; интерфейсные элементы разнесены. */
+.author,.eyebrow,.chat-name{position:absolute;color:#858585;left:50%;top:8%;transform:translateX(-50%);font-size:clamp(10px,.79vw,20px);font-weight:400;white-space:nowrap}
+.eyebrow{top:10%;font-size:clamp(10px,.72vw,18px)}
+.hero{display:block;text-align:center}
+.eyehole{position:absolute;top:22.5%;left:50%;width:clamp(190px,16.7vw,425px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;overflow:hidden;background:#000;contain:paint}
+.eye-frame{position:absolute;inset:0;width:100%;height:100%;opacity:0;object-fit:contain;transition:opacity .1s linear;filter:contrast(1.07);pointer-events:none}.eye-frame.visible{opacity:1}
+.eyehole.flash{filter:brightness(1.5) contrast(2)}.eyehole.flash .glitch-bar{opacity:1;animation:glitch-tear .12s steps(3) 2}
+.glitch-bar{position:absolute;pointer-events:none;top:28%;left:-5%;width:110%;height:28%;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,.08) 13%,rgba(0,0,0,.72) 55%,transparent 100%);mix-blend-mode:screen;opacity:0}
+@keyframes glitch-tear{0%{transform:translateX(-17px) skewX(8deg)}50%{transform:translateX(20px) skewX(-5deg)}100%{transform:translateX(-5px)}}
+.hero-caption{position:absolute;top:55%;left:50%;width:min(92vw,780px);transform:translateX(-50%)}.hero-caption h1{font-size:clamp(27px,2.1vw,54px);font-weight:400;line-height:1.05;letter-spacing:-.045em;margin:0}.hero-caption p{font-size:clamp(13px,1.2vw,29px);letter-spacing:.01em;color:#676767;margin:10px 0 0}
+.notification{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:18px;min-width:clamp(220px,16vw,420px);max-width:88vw;padding:17px 25px;border:0;border-radius:999px;background:#285b9e;font-size:clamp(12px,.82vw,20px);color:#fff;box-shadow:none;white-space:nowrap;transition:opacity .4s,transform .4s,visibility .4s;z-index:3}
+.notification.hidden{opacity:0;transform:translate(-50%,12px);pointer-events:none;visibility:hidden}.notification:hover{background:#3169b2}.notification .unread-dot{width:13px;height:13px;flex:none;background:white;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+.micro-hint{position:absolute;bottom:3.5%;left:50%;transform:translateX(-50%);font-size:11px;color:#666;opacity:0;transition:opacity .8s}.micro-hint.shown{opacity:.85}
+.chat-scene{display:block}.chat-name{top:13%;color:#eee;font-size:clamp(13px,.83vw,23px)}
+.chat-stack{position:absolute;top:24%;bottom:27%;left:50%;transform:translateX(-50%);width:min(80vw,1050px);display:flex;flex-direction:column;align-items:stretch;gap:clamp(10px,2.8vh,28px);padding:0 12px;overflow:auto;scrollbar-width:none;overscroll-behavior:contain;scroll-behavior:smooth}.chat-stack::-webkit-scrollbar{display:none}
+.message{max-width:50%;width:max-content;border-radius:100px;padding:13px 20px;color:#f7f7f7;font-size:clamp(12px,.83vw,20px);line-height:1.24;letter-spacing:-.02em;opacity:0;transform:translateY(12px);transition:opacity .35s ease,transform .35s ease;pointer-events:none;flex-shrink:0}
+.message.show{opacity:1;transform:translateY(0)}.message.incoming{align-self:flex-start;background:var(--bubble)}.message.outgoing{align-self:flex-end;background:var(--blue)}.message time{font-size:.83em;color:#b0b0b0;margin-left:10px;white-space:nowrap;float:right;padding-top:3px}.message.outgoing time{color:#a9bddc}
+.chat-short .chat-stack{top:34%;bottom:34%}.chat-final .chat-stack{top:21%;bottom:23%;gap:13px}.chat-final .message{max-width:85%;padding:12px 19px}
+.outline-button{display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(240,240,240,.67);border-radius:100px;padding:13px 24px;background:transparent;color:#efefef;font-size:clamp(12px,.75vw,19px);line-height:1;min-width:clamp(160px,12.5vw,320px);min-height:37px;transition:background .2s,border-color .2s,color .2s}
+.outline-button:hover{background:#1b1b1b;border-color:#fff}.outline-button:disabled{opacity:.4;cursor:default}.block-contact{position:absolute;bottom:12%;left:50%;transform:translateX(-50%)}.chat-hint{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);text-align:center;font-size:clamp(11px,.67vw,17px);color:#666;opacity:0;transition:opacity .3s;white-space:nowrap}.chat-hint.active{opacity:1}.chat-final .block-contact:active{transform:translateX(-50%) translateX(2px)}
+/* Информационные вставки: точное чередование левых и правых полей. */
+.narrative{display:block}.copy{position:absolute;top:50%;transform:translateY(-50%);font-weight:400;font-size:clamp(19px,1.52vw,37px);line-height:1.03;letter-spacing:-.048em;margin:0;width:min(41vw,1040px);min-width:0;max-width:calc(100vw - 45px);text-wrap:pretty}
+.left-position .copy{left:14%}.right-position .copy{right:12%}.center-right .copy{left:47%;width:min(43vw,1050px)}.center-position .copy{left:50%;transform:translate(-50%,-50%);width:min(48vw,1100px)}
+.align-center{text-align:center}.narrative[data-kind="notice"] .copy{top:47%}.narrative[data-kind="notice"] .notification{bottom:9%}
+/* typewrite/sequence выставляются скриптом — не bitmap */
+.typewrite{visibility:hidden}.typewrite.typing,.typewrite.typed{visibility:visible}.typewrite.typing:after,.sequence-text.is-typing:after{content:'|';display:inline-block;color:#aaa;animation:caret .6s steps(2) infinite;font-weight:300}@keyframes caret{to{opacity:0}}
+.sequence-text{min-height:1.3em}.sequence-text{top:53%}
+/* Сетка фотографий адаптируется без потери порядка 2 x 2. */
+.photo-scene{display:block}.photo-heading{position:absolute;top:13%;left:50%;transform:translateX(-50%);margin:0;width:95vw;text-align:center;font-size:clamp(20px,1.45vw,37px);font-weight:400;line-height:1.1;letter-spacing:-.045em}
+.photo-grid{position:absolute;left:50%;top:29%;transform:translateX(-50%);display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(52vw,1330px)}
+.photo-choice{padding:0;border:0;outline:none;background:#151515;aspect-ratio:2.05/1;min-width:0;position:relative;overflow:hidden;transition:filter .3s ease}
+.photo-choice img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}.photo-choice:focus-visible{outline:3px solid #eee;outline-offset:3px}.photo-choice:after{content:'';position:absolute;inset:0;z-index:1;border:4px solid transparent;pointer-events:none;transition:border-color .18s}.photo-choice.selected:after{border-color:#ba2424}.photo-choice.wrong:after{border-color:#8c2525}.photo-choice:hover{filter:brightness(1.1)}.photo-choice.correct{filter:brightness(1.07)}
+.photo-counter{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);font-size:clamp(13px,.83vw,20px);white-space:nowrap}.photo-feedback{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);text-align:center;font-size:clamp(12px,.9vw,20px);color:#d2d2d2;width:90vw;min-height:2em;margin:0}
+/* Вопросы, разрешения, таймеры — настоящие кнопки, счётчики и API. */
+.question-scene,.countdown-scene,.statement{display:block;text-align:center}.question,.countdown-heading{position:absolute;top:42%;left:50%;width:90vw;transform:translate(-50%,-50%);font-weight:400;font-size:clamp(21px,1.52vw,39px);line-height:1.2;letter-spacing:-.046em;margin:0}
+.choice-buttons{position:absolute;left:50%;top:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:20px;width:min(95vw,970px)}.choice-confirm{position:absolute;left:50%;top:60%;width:90vw;transform:translateX(-50%);text-align:center;font-size:clamp(17px,1vw,24px);opacity:0;transition:opacity .3s;color:#f0f0f0}.choice-confirm.show{opacity:1}
+.choice-confirm.alert{color:#9c2c2c}
+.dramatic-text{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;width:95vw;font-size:clamp(34px,4.8vw,110px);color:#811c1d;font-weight:400;letter-spacing:-.05em;line-height:1.1}.dramatic-text.smaller{font-size:clamp(21px,1.7vw,44px);color:#f4f4f4}.statement.big-red .dramatic-text{color:#8c1d1d}
+.permission-status{position:absolute;left:50%;bottom:22%;transform:translateX(-50%);font-size:clamp(12px,.85vw,18px);color:#777;max-width:85vw;white-space:normal}.permission-retry{position:absolute;left:50%;bottom:13%;transform:translateX(-50%)}
+.countdown-heading{top:50%}.countdown-label{position:absolute;bottom:16%;left:50%;transform:translateX(-50%);font-size:14px;color:#777}.final-choice .countdown-heading{top:43%}.final-choice .choice-buttons{top:50%}.final-choice .choice-confirm{top:65%}
+.ending .copy{top:45%}.end-note{position:absolute;bottom:11%;right:15%;color:#777;font-size:clamp(13px,.92vw,24px)}
+/* unobtrusive site controls */
+.sound-toggle{position:fixed;top:15px;right:16px;z-index:40;padding:8px 12px;background:rgba(5,5,5,.7);border:1px solid #202020;border-radius:30px;color:#8c8c8c;font-size:12px;opacity:.56;transition:opacity .3s}.sound-toggle:hover,.sound-toggle:focus-visible{opacity:1}.sound-toggle span{font-size:11px}.story-progress{position:fixed;z-index:39;top:0;left:0;right:0;height:2px;pointer-events:none}.story-progress>div{height:100%;width:0%;background:#6b1515;transition:width .65s}
+#navPrompt{position:fixed;bottom:2.2%;left:50%;transform:translateX(-50%);z-index:10;opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.15em;color:#4e4e4e;transition:opacity .45s;white-space:nowrap}#navPrompt.visible{opacity:1}#navPrompt i{display:block;width:9px;height:9px;border:solid #555;border-width:0 1px 1px 0;transform:rotate(45deg);animation:down 1.8s infinite}@keyframes down{50%{transform:translateY(5px) rotate(45deg)}}
+@media(max-width:900px){.copy{font-size:clamp(18px,2.4vw,25px);line-height:1.12;letter-spacing:-.035em;width:56vw}.left-position .copy{left:9%}.right-position .copy{right:8%}.center-right .copy{left:31%;width:61vw}.center-position .copy{width:77vw}.photo-grid{width:min(75vw,750px)}.message{font-size:clamp(12px,1.5vw,16px)}.chat-stack{width:min(90vw,750px)}}
+@media(max-width:600px){
+  .author{top:7.5%;font-size:12px}.eyebrow{top:8%;font-size:11px}.eyehole{top:24%;width:clamp(175px,58vw,280px)}.hero-caption{top:59%}.hero-caption h1{font-size:clamp(28px,7vw,40px)}.hero-caption p{font-size:13px}.notification{bottom:14%;padding:14px 20px;min-width:245px;font-size:12px;gap:11px}.notification .unread-dot{width:9px;height:9px}.micro-hint{bottom:7%}
+  .copy{width:83vw!important;left:8.5%!important;right:auto!important;top:50%;font-size:clamp(18px,4.5vw,24px);letter-spacing:-.045em;line-height:1.14}.center-position .copy{left:50%!important;transform:translate(-50%,-50%);width:88vw!important}.narrative[data-kind="notice"] .copy{top:43%}.narrative[data-kind="notice"] .notification{bottom:12%}
+  .photo-heading{top:17%;font-size:clamp(18px,4.2vw,24px);width:95vw}.desktop-break{display:none}.photo-grid{top:32%;width:93vw;gap:7px}.photo-choice:after{border-width:3px}.photo-counter{bottom:19%;font-size:13px}.photo-feedback{bottom:10%;font-size:12px}
+  .chat-name{top:14%;font-size:13px}.chat-stack{top:22%;bottom:26%;width:100%;padding:0 7%;gap:12px}.message{max-width:78%;font-size:clamp(12px,3.1vw,15px);padding:11px 15px;border-radius:22px}.message time{margin-left:6px;font-size:10px}.chat-short .chat-stack{top:34%;bottom:34%}.chat-final .chat-stack{top:19%;bottom:24%;gap:9px}.chat-final .message{max-width:85%;padding:10px 14px}.block-contact{bottom:12%}.chat-hint{bottom:6%;font-size:10px}
+  .question,.countdown-heading{width:92vw;font-size:clamp(21px,5.1vw,29px)}.choice-buttons{gap:10px;width:95vw}.outline-button{font-size:12px;min-width:0;min-height:41px;padding:10px 16px;flex:1;max-width:220px}.block-contact,.permission-retry{min-width:180px;flex:none}.choice-confirm{top:61%;font-size:15px}.dramatic-text{font-size:clamp(40px,9vw,70px)}.dramatic-text.smaller{font-size:clamp(22px,5vw,30px);width:91vw}.permission-status{bottom:25%;width:90vw;font-size:12px}.permission-retry{bottom:15%}.countdown-label{bottom:20%}.ending .copy{top:46%}.end-note{right:11%;bottom:11%;font-size:14px}
+  .sound-toggle{top:12px;right:12px;padding:6px 10px;font-size:13px}.sound-toggle span{display:none}
+}
+@media(max-height:530px) and (orientation:landscape){.eyehole{width:min(26vh,210px);top:18%}.hero-caption{top:62%}.author{top:3%}.notification{bottom:5%;padding:10px}.photo-heading{top:7%;font-size:18px}.photo-grid{top:22%;width:min(55vw,700px)}.photo-counter{bottom:4%}.photo-feedback{bottom:1%;font-size:10px}.chat-name{top:5%}.chat-stack,.chat-final .chat-stack{top:14%;bottom:24%;gap:5px}.message,.chat-final .message{padding:6px 10px}.block-contact{bottom:7%}.chat-hint{bottom:1%}.copy{font-size:clamp(16px,2.3vw,25px)}.question{top:35%}.choice-buttons{top:54%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* Неполученные сообщения не занимают место: ранее открытые всегда остаются в переписке. */
+.message:not(.show){display:none}
+/* Компактный шаг чата повторяет межстрочные интервалы SVG-макета. */
+@media(min-width:601px){.chat-stack{gap:clamp(8px,1.2vh,16px)}.message{padding:10px 18px}.chat-final .chat-stack{gap:10px}}
+
+/* ================================================================
+   EDITION 2 — единый компонент переписки, композиция экранов,
+   деликатный главный экран и анимации без видимых SVG-подложек.
+   ================================================================ */
+.chat-stack{
+  width:min(39vw,980px);
+  gap:clamp(9px,1.45vh,20px);
+  padding:2px 3px 12px;
+}
+.message,.chat-final .message{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  width:fit-content;
+  max-width:49%;
+  min-width:0;
+  padding:12px 15px;
+  border-radius:20px;
+  line-height:1.34;
+  letter-spacing:-.012em;
+  overflow-wrap:break-word;
+  font-size:clamp(12px,.76vw,19px);
+  transform:none;
+  opacity:1;
+  transition:none;
+}
+.chat-final .message{max-width:75%;padding:11px 15px}
+.message-body{display:block;min-width:0;flex:1 1 auto}
+.message time,.message.outgoing time{
+  display:block;
+  flex:0 0 auto;
+  align-self:flex-end;
+  font-size:.75em;
+  line-height:1;
+  margin:0 0 2px;
+  padding:0;
+  float:none;
+  opacity:.85;
+  white-space:nowrap;
+}
+.message.show{animation:bubble-reveal .66s cubic-bezier(.18,.88,.24,1) both}
+.chat-scene.restored .message.show{animation:none}
+@keyframes bubble-reveal{
+  from{opacity:0;filter:blur(3px);transform:translate3d(0,24px,0) scale(.975)}
+  65%{filter:blur(0)}
+  to{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}
+}
+/* Общий стиль всех входящих и исходящих — отличаются только оттенком. */
+.message.incoming{background:#454545}
+.message.outgoing{background:#285998}
+
+/* Текстовые связки из оригинального макета — одна страница, два поля. */
+.paired-scene .copy:not(.story-aside){
+  top:34%;left:14%;right:auto;width:min(43vw,1050px);
+}
+.paired-scene .story-aside{
+  top:65%;left:auto;right:12%;width:min(40vw,950px);
+}
+.choice-sequence .story-aside{
+  top:30%;left:14%;right:auto;width:min(42vw,990px);
+}
+.choice-sequence .question{top:58%;left:70%;width:49vw}
+.choice-sequence .choice-buttons{top:66%;left:70%;width:42vw}
+.choice-sequence .choice-confirm{top:75%;left:70%;width:45vw}
+.short-warning-sequence .copy{font-size:clamp(22px,1.8vw,44px)}
+
+/* Разрешение запрашивает только браузер, без поясняющих строк и кнопок. */
+.permission-status,.permission-retry{display:none!important}
+.microphone .dramatic-text{
+  opacity:0;
+  transform:translate(-50%,calc(-50% + 18px));
+  transition:opacity .85s ease,transform .85s cubic-bezier(.22,.8,.2,1);
+}
+.microphone.reveal-message .dramatic-text{
+  opacity:1;
+  transform:translate(-50%,-50%);
+}
+.statement.big-red .dramatic-text{
+  width:96vw;
+  font-size:clamp(49px,6.3vw,158px);
+}
+
+/* Главный экран: размеры и отступы ближе к референсу 2560×1440. */
+.hero .author{top:7.5%;font-size:clamp(10px,.67vw,17px)}
+.hero .eyehole{top:22.75%;width:clamp(180px,14.85vw,380px)}
+.hero .hero-caption{top:58%}
+.hero .hero-caption h1{font-size:clamp(24px,1.83vw,47px)}
+.hero .hero-caption p{font-size:clamp(11px,.98vw,24px);margin-top:8px}
+.hero .notification{
+  bottom:10%;min-width:unset;width:auto;
+  max-width:90vw;padding:12px 20px;
+  font-size:clamp(10px,.68vw,17px);gap:10px;
+}
+.hero .notification .unread-dot{width:8px;height:8px}
+.eye-frame{transition:opacity .065s linear}
+
+@media(max-width:1000px){
+  .chat-stack{width:min(76vw,710px)}
+  .message{max-width:65%}
+  .chat-final .message{max-width:80%}
+}
+@media(max-width:600px){
+  .hero .author{top:7%;font-size:11px}
+  .hero .eyehole{top:23%;width:min(55vw,238px)}
+  .hero .hero-caption{top:58%;width:92vw}
+  .hero .hero-caption h1{font-size:clamp(27px,7.2vw,36px)}
+  .hero .hero-caption p{font-size:12px}
+  .hero .notification{bottom:12%;padding:12px 17px;font-size:11px;gap:8px}
+  .hero .notification .unread-dot{width:7px;height:7px}
+  .chat-stack{width:100%;padding:0 6%;gap:12px}
+  .message,.chat-final .message{
+    max-width:79%;gap:7px;padding:10px 12px;
+    font-size:clamp(12px,3.3vw,14px);border-radius:16px;line-height:1.34
+  }
+  .chat-final .message{max-width:85%}
+  .message time{font-size:10px;margin-bottom:1px}
+  .paired-scene .copy:not(.story-aside){
+    top:30%;left:8.5%!important;right:auto!important;width:83vw!important;
+  }
+  .paired-scene .story-aside{
+    top:67%;left:8.5%!important;right:auto!important;width:83vw!important;
+  }
+  .choice-sequence .story-aside{
+    top:26%;left:8.5%!important;right:auto!important;width:83vw!important;
+  }
+  .choice-sequence .question{top:56%;left:50%;width:92vw}
+  .choice-sequence .choice-buttons{top:65%;left:50%;width:92vw}
+  .choice-sequence .choice-confirm{top:76%;left:50%;width:90vw}
+  .short-warning-sequence .copy{font-size:clamp(19px,5vw,26px)}
+  .statement.big-red .dramatic-text{font-size:clamp(45px,10.3vw,70px)}
+}
+@media(max-height:540px) and (orientation:landscape){
+  .hero .eyehole{top:17%;width:min(27vh,180px)}
+  .hero .hero-caption{top:61%}
+  .paired-scene .copy:not(.story-aside){top:33%}
+  .paired-scene .story-aside{top:68%}
+}
+/* Reveal is linked to the semantic screen kind, not an extra utility class. */
+.scene[data-kind="microphone"] .dramatic-text{
+  opacity:0;
+  transform:translate(-50%,calc(-50% + 18px));
+  transition:opacity .85s ease,transform .85s cubic-bezier(.22,.8,.2,1);
+}
+.scene[data-kind="microphone"].reveal-message .dramatic-text{
+  opacity:1;
+  transform:translate(-50%,-50%);
+}
+/* Вместимость переписки: на десктопе первый пузырь не обрезается при раскрытии всей цепочки. */
+@media(min-width:601px){.chat-scene:not(.chat-short):not(.chat-final) .chat-stack{bottom:20.5%}}
+
+/* v3: все фразы сценария привязаны к центру, без побочных смещений от .copy */
+.choice-sequence .question,
+.choice-sequence .choice-buttons,
+.choice-sequence .choice-confirm {left:50%!important;right:auto!important;}
+.choice-sequence .question{top:49%;width:min(92vw,850px);transform:translate(-50%,-50%);text-align:center;}
+.choice-sequence .choice-buttons{top:58%;width:min(90vw,560px);transform:translateX(-50%);}
+.choice-sequence .choice-confirm{top:69%;width:min(90vw,600px);transform:translateX(-50%);}
+.choice-sequence .story-aside{left:50%!important;right:auto!important;top:28%;width:min(90vw,750px)!important;transform:translate(-50%,-50%)!important;text-align:center;}
+/* Реплики рассказчика находятся прямо под информационным текстом, а не сверху у края. */
+.paired-scene .story-aside{top:70%;left:50%!important;right:auto!important;width:min(82vw,840px)!important;transform:translate(-50%,-50%)!important;text-align:center;}
+.paired-scene .copy:not(.story-aside){top:38%;}
+/* Кнопка блокировки наследует единственный красный акцент дизайна. */
+.block-contact:hover,.block-contact:active,.block-contact:focus-visible{background:var(--red)!important;border-color:var(--red)!important;color:white!important;}
+.block-contact:active{filter:brightness(.88)}
+.return-top{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);min-width:220px;z-index:4}
+.return-top:hover,.return-top:focus-visible{background:var(--red);border-color:var(--red)}
+/* Дополнительная вместимость длинной переписки с Полиной. */
+.chat-final .chat-stack{top:18%;bottom:22%;width:min(78vw,890px);gap:10px;overflow-y:auto;overscroll-behavior:contain}
+.chat-final .message{max-width:min(78%,670px)}
+@media(max-width:600px){
+  .choice-sequence .story-aside{top:29%;width:88vw!important;font-size:clamp(18px,4.5vw,24px)}
+  .choice-sequence .question{top:49%;width:92vw}
+  .choice-sequence .choice-buttons{top:59%;width:92vw}
+  .choice-sequence .choice-confirm{top:73%}
+  .paired-scene .copy:not(.story-aside){top:32%}
+  .paired-scene .story-aside{top:68%;width:87vw!important;font-size:clamp(18px,4.5vw,26px)}
+  .chat-final .chat-stack{width:100%;top:17%;bottom:23%;padding:0 6%;gap:8px}
+  .chat-final .message{max-width:85%}
+  .return-top{bottom:6%;min-width:190px}
+}
+/* Важно: непрочитанные сообщения не занимают место и не показываются заранее.
+   Именно отсутствие этого правила ломало последовательный чат с Полиной. */
+.chat-scene .message:not(.show){display:none!important}
+
+/* v4: одинаковый вид всех уведомлений, включая стартовое. */
+.notification,.hero .notification{
+  min-width:unset;max-width:90vw;width:auto;box-sizing:border-box;
+  padding:12px 20px;gap:10px;font-size:clamp(11px,.82vw,18px);
+  border-radius:999px;background:#285b9e;line-height:1.3;
+}
+.notification .unread-dot,.hero .notification .unread-dot{width:9px;height:9px}
+/* Варианты ответа при наведении, фокусе и выборе становятся серыми. */
+.choice-buttons .outline-button:hover,
+.choice-buttons .outline-button:focus-visible,
+.choice-buttons .outline-button:active,
+.choice-buttons .outline-button.selected-button{
+  background:#656565!important;border-color:#8c8c8c!important;color:#fff!important;
+}
+/* Реплики Полины печатаются на одном экране с просьбой о камере. */
+.camera-with-warning .dramatic-text{top:43%;}
+.camera-with-warning .camera-warning{position:absolute;left:50%!important;right:auto!important;top:62%;
+ transform:translate(-50%,-50%)!important;text-align:center;width:min(90vw,880px)!important;
+ color:#eee;font-size:clamp(17px,1.45vw,34px);line-height:1.24;}
+/* В финале подсказок к прокрутке уже нет. */
+body:has(.scene.ending[aria-hidden="false"]) #navPrompt{opacity:0!important;visibility:hidden!important}
+@media(max-width:600px){
+ .notification,.hero .notification{padding:12px 16px;font-size:11px;gap:8px}
+ .camera-with-warning .dramatic-text{top:39%}
+ .camera-with-warning .camera-warning{top:61%;font-size:clamp(17px,4.5vw,23px)}
+}

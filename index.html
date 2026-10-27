@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#000000" name="theme-color"/>
+<meta content="Где твой сталкер? Интерактивный лонгрид о феномене сталкерства." name="description"/>
+<title>Где твой сталкер? — интерактивный лонгрид</title>
+<link as="image" href="assets/eye_empty.png" rel="preload"/>
+<link href="styles.css" rel="stylesheet"/>
+<script defer="" src="script.js"></script>
+</head>
+<body>
+<!-- Все экраны собраны из HTML-текста и самостоятельных элементов интерфейса.
+       Исходные SVG-макеты целиком НЕ используются ни как фон, ни как изображение. -->
+<button aria-label="Отключить звук" aria-pressed="true" class="sound-toggle" id="soundToggle" title="Включить или выключить звук">♫ <span>Звук</span></button>
+<div aria-hidden="true" class="story-progress" id="storyProgress"><div></div></div>
+<main aria-label="Интерактивный лонгрид" id="story">
+<section aria-label="Начало истории" class="scene hero" data-kind="hero">
+<div class="author">Панасенко Полина</div>
+<div aria-label="Вид в дверной глазок с помехами" class="eyehole" id="eyehole">
+<img alt="Пустой подъезд, вид через дверной глазок" class="eye-frame visible" data-eye="0" src="assets/eye_empty.png"/>
+<img alt="Человек в глубине подъезда" class="eye-frame" data-eye="1" src="assets/eye_distant.png"/>
+<img alt="Незнакомец в капюшоне у двери" class="eye-frame" data-eye="2" src="assets/eye_close.png"/>
+<span aria-hidden="true" class="glitch-bar"></span>
+</div>
+<div class="hero-caption"><h1>Где твой <span class="accent">сталкер</span>?</h1><p>лонгрид о феномене сталкерства</p></div>
+<button class="notification hidden" data-notification-target="next" id="heroNotification" type="button"><span class="unread-dot"></span><span>У вас одно новое сообщение</span></button>
+
+</section>
+<section aria-label="Переписка с неизвестным" class="scene chat-scene" data-kind="chat">
+<h2 class="chat-name">Неизвестный</h2>
+<div class="chat-stack">
+<div class="message incoming" data-message=""><span class="message-body">Ты сегодня прекрасно выглядишь. </span><time>10:23</time></div>
+<div class="message outgoing" data-message=""><span class="message-body">Кто вы? </span><time>10:23</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Неважно. Просто захотелось<br/> тебе написать. </span><time>10:24</time></div>
+<div class="message outgoing" data-message=""><span class="message-body">Откуда у вас мой номер? </span><time>10:24</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Не переживай. Я не чужой тебе человек.<br/>Просто ты меня пока<br/> не знаешь. </span><time>10:24</time></div>
+<div class="message outgoing" data-message=""><span class="message-body">Не пиши мне больше. </span><time>10:25</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Хорошо. Не хотел тебя пугать.<br/>Хорошего дня </span><time>10:25</time></div>
+</div>
+<button class="outline-button block-contact" data-block="normal">Заблокировать</button>
+<p class="chat-hint">Листай, не стесняйся. Тут ещё сообщения.</p>
+</section>
+<section class="scene narrative left-position" data-kind="type">
+
+<p class="copy typewrite">Перед нами один из конкретных примеров <span class="accent">сталкинга</span>. Ежегодно в России со сталкингом сталкивается около <span class="accent">30 миллионов</span> человек. <span class="accent">18 миллионов</span> женщин и <span class="accent">12 миллионов</span> мужчин.</p>
+</section>
+<section class="scene narrative right-position" data-kind="type">
+<p class="copy typewrite">Интересно, сколько из них до последнего думали, что это просто совпадение.</p>
+</section>
+<section class="scene narrative right-position" data-kind="notice">
+
+<p class="copy typewrite">Миллионы людей, которые <span class="accent">оглядывались</span> на улице, <span class="accent">боялись</span> открыть новое сообщение и <span class="accent">не чувствовали себя в безопасности</span> там, где раньше им было спокойно.</p>
+<button class="notification hidden" data-notification-delay="3200" data-notification-target="next"><span class="unread-dot"></span>У вас три новых сообщения</button>
+</section>
+<section aria-label="Новая переписка" class="scene chat-scene chat-short" data-kind="chat">
+<h2 class="chat-name">Неизвестный</h2>
+<div class="chat-stack">
+<div class="message incoming" data-message=""><span class="message-body">Сегодня идёшь другой дорогой? </span><time>18:35</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Зря, там дольше </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Не бойся, я присмотрю за тобой </span><time>18:36</time></div>
+</div>
+<button class="outline-button block-contact" data-block="normal">Заблокировать</button>
+<p class="chat-hint">Ну давай, листай. Это ещё не всё.</p>
+</section>
+<!-- Три фотозадания. Фото — отдельные изображения, не фон из исходного SVG.
+         Разметка фотоконтейнера полностью адаптивная. -->
+<section aria-label="Найди преследователя: задание 1 из 3" class="scene photo-scene" data-correct="2" data-kind="photos">
+<h2 class="photo-heading">Будь внимательнее. Выбери картинку,<br class="desktop-break"/> на которой видишь <span class="accent">его</span>.</h2>
+<div aria-label="Выбери фотографию, где виден незнакомец" class="photo-grid" role="group">
+<button aria-label="Изображение 1, слева сверху" class="photo-choice" data-photo="0"><img alt="Вечерняя улица Москвы, первый ракурс" src="assets/lot1_1.png"/></button>
+<button aria-label="Изображение 2, справа сверху" class="photo-choice" data-photo="1"><img alt="Вечерняя улица Москвы, второй ракурс" src="assets/lot1_2.png"/></button>
+<button aria-label="Изображение 3, слева снизу" class="photo-choice" data-photo="2"><img alt="Люди идут по вечерней улице Москвы" src="assets/lot1_3.png"/></button>
+<button aria-label="Изображение 4, справа снизу" class="photo-choice" data-photo="3"><img alt="Люди спускаются в подземный переход" src="assets/lot1_4.png"/></button>
+</div>
+<div class="photo-counter">1/3</div><p aria-live="polite" class="photo-feedback" role="status"></p>
+</section>
+<section aria-label="Найди преследователя: задание 2 из 3" class="scene photo-scene" data-correct="0" data-kind="photos">
+<h2 class="photo-heading">Будь внимательнее. Выбери картинку,<br class="desktop-break"/> на которой видишь <span class="accent">его</span>.</h2>
+<div aria-label="Выбери фотографию, где виден незнакомец" class="photo-grid" role="group">
+<button aria-label="Изображение 1, слева сверху" class="photo-choice" data-photo="0"><img alt="Люди на остановке в ночном городе" src="assets/lot2_1.jpg"/></button>
+<button aria-label="Изображение 2, справа сверху" class="photo-choice" data-photo="1"><img alt="Салон автобуса с пассажирами" src="assets/lot2_2.jpg"/></button>
+<button aria-label="Изображение 3, слева снизу" class="photo-choice" data-photo="2"><img alt="Мокрый тротуар вечером" src="assets/lot2_3.jpg"/></button>
+<button aria-label="Изображение 4, справа снизу" class="photo-choice" data-photo="3"><img alt="Московская улица ночью" src="assets/lot2_4.jpg"/></button>
+</div>
+<div class="photo-counter">2/3</div><p aria-live="polite" class="photo-feedback" role="status"></p>
+</section>
+<section aria-label="Найди преследователя: задание 3 из 3" class="scene photo-scene" data-correct="1,2" data-kind="photos">
+<h2 class="photo-heading">Будь внимательнее. Выбери картинки, на<br class="desktop-break"/> которых видишь <span class="accent">его</span>.</h2>
+<div aria-label="Найди незнакомца на двух фотографиях" class="photo-grid" role="group">
+<button aria-label="Изображение 1, слева сверху" class="photo-choice" data-photo="0"><img alt="Ночная улица с припаркованными автомобилями" src="assets/lot3_1.png"/></button>
+<button aria-label="Изображение 2, справа сверху" class="photo-choice" data-photo="1"><img alt="Тёмный двор с автомобилями" src="assets/lot3_2.png"/></button>
+<button aria-label="Изображение 3, слева снизу" class="photo-choice" data-photo="2"><img alt="Двор между жилыми домами" src="assets/lot3_3.png"/></button>
+<button aria-label="Изображение 4, справа снизу" class="photo-choice" data-photo="3"><img alt="Освещённый подъезд жилого дома" src="assets/lot3_4.png"/></button>
+</div>
+<div class="photo-counter">3/3</div><p aria-live="polite" class="photo-feedback" role="status"></p>
+</section>
+<section class="scene narrative center-right" data-kind="type">
+<p class="copy typewrite">Довольно жутко, правда? Один из самых пугающих видов сталкинга — преследование в реальной жизни. Сталкер может следовать за вами по улицам, появляться у дома. В некоторых случаях такое преследование становится реальной <span class="accent">угрозой для жизни</span>.</p>
+</section>
+<section class="scene narrative left-position paired-scene" data-kind="paired" data-sequence='["Хороший совет.","Странно, что он появился именно здесь.","Я, кажется, писал немного другое."]'>
+<p class="copy typewrite">Если вам кажется, что за вами следят, <span class="accent">направляйтесь домой</span>: так вы можете раскрыть свой адрес. Зайдите в людное место, при непосредственной опасности обратитесь в экстренные службы. <span class="accent">Не пытайтесь противостоять</span> преследователю в одиночку. Ваш приоритет — добраться до безопасного места.</p>
+<p aria-live="polite" class="copy sequence-text story-aside"></p></section>
+
+<section class="scene narrative left-position paired-scene" data-kind="paired" data-sequence='["Подожди.","Это сообщение не должно было появиться.","Я его не добавлял."]'>
+<p class="copy typewrite">Текст читаешь, а меня почему-то игнорируешь и блокируешь, несправедливо...</p>
+<p aria-live="polite" class="copy sequence-text story-aside"></p></section>
+
+<section class="scene narrative right-position" data-kind="type">
+<p class="copy typewrite">Если вы уже в подъезде и подозреваете, что сталкер находится рядом, не выдавайте, в какой именно квартире вы находитесь. <span class="accent">Запирайте входную дверь</span> на замок, открывайте её незнакомцу и вступайте с ним в контакт. <span class="accent">Не включайте свет. Ведите себя тихо.</span> Это всё равно не поможет, вам уже вообще ничего не поможет.</p>
+</section>
+
+<section class="scene question-scene choice-sequence" data-kind="choice-sequence" data-options="Да|Нет" data-question="Дома есть &lt;span class='accent'&gt;кто-то&lt;/span&gt; помимо тебя?" data-sequence='["Не отвечай ему.","Хотя кому я это говорю.","Ты ведь и мне не отвечаешь."]'><p aria-live="polite" class="copy sequence-text story-aside"></p>
+<h2 class="question">Дома есть <span class="accent">кто-то</span> помимо тебя?</h2>
+<div class="choice-buttons"><button class="outline-button" data-choice="">Да</button><button class="outline-button" data-choice="">Нет</button></div>
+<p aria-live="polite" class="choice-confirm"></p>
+</section>
+<section class="scene statement big-red camera-with-warning" data-kind="camera" data-sequence='["Нет, это уже слишком.", "Полина, убери это.", "Полина?"]'>
+<h2 class="dramatic-text">Дай мне тебя увидеть.</h2>
+<p aria-live="polite" class="copy sequence-text align-center camera-warning"></p>
+</section>
+<section class="scene countdown-scene" data-kind="countdown" data-seconds="15">
+<h2 class="countdown-heading">У тебя есть <span class="accent" data-clock="">15</span> секунд, чтобы проверить, закрыта ли дверь.</h2>
+<p class="countdown-label">Время идёт.</p>
+</section>
+<section class="scene question-scene" data-kind="choice">
+<h2 class="question">Ты запер дверь?</h2>
+<div class="choice-buttons"><button class="outline-button" data-choice="">Закрыта</button><button class="outline-button" data-choice="">Теперь закрыта</button></div>
+<p aria-live="polite" class="choice-confirm"></p>
+</section>
+<section class="scene statement" data-kind="type"><h2 class="dramatic-text smaller typewrite">Я разве уточнял, что это <span class="accent">входная дверь</span>?</h2></section>
+<section class="scene statement" data-kind="type"><h2 class="dramatic-text smaller typewrite">Может я говорил про <span class="accent">балконную дверь</span>.</h2></section>
+<section class="scene statement" data-kind="type"><h2 class="dramatic-text smaller typewrite">Или про дверь в <span class="accent">твою комнату</span>.</h2></section>
+<section class="scene statement" data-kind="microphone">
+<h2 class="dramatic-text smaller">Почему не даёшь доступ к микрофону?</h2>
+
+
+</section>
+<section class="scene narrative left-position" data-kind="type">
+<p class="copy typewrite">Ха-ха, лад<span class="accent">н</span>о, расслабься. Я просто пров<span class="accent">е</span>рял т<span class="accent">в</span>ои н<span class="accent">е</span>рвы. Ты же не все<span class="accent">рь</span>ёз в<span class="accent">е</span>ришь во всё это? Просто решил не<span class="accent">м</span>ного тебя нап<span class="accent">у</span>гать. Представляешь, что было бы, если бы за тобой действительно следил сталкер?</p>
+</section>
+<section class="scene narrative right-position" data-kind="notice">
+<p class="copy typewrite">Кстати, есть мнение, что некоторые сталкеры получают <span class="accent">удовольствие</span> не столько от самого преследования, сколько от осознания того, что их <span class="accent">жертва боится</span>. Забавно, правда? Хотя не знаю, зачем я тебе это рассказываю. Ладно, хватит с тебя страшилок. Всё хорошо, <span class="accent">ты в безопасности</span>. Можешь выдохнуть.</p>
+<button class="notification hidden" data-notification-delay="3200" data-notification-target="next"><span class="unread-dot"></span>У вас одно новое сообщение</button>
+</section>
+<section aria-label="Сообщения разработчика" class="scene chat-scene chat-final" data-final="true" data-kind="chat">
+<h2 class="chat-name">Полина (разработчик)</h2>
+<div class="chat-stack">
+<div class="message incoming" data-message=""><span class="message-body">Срочно зайди в чат </span><time>18:35</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Ничего из этого не должно было происходить. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">На сайте кто-то посторонний </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Ты всё ещё думаешь, что это история про другого человека? </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Интересно </span><time>18:35</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Я тоже так думала, когда начинала. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Мне кажется, ты неправильно понял, кто здесь за кем наблюдает. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Я могу удалить эту часть. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Но тогда ты не узнаешь, кто её написал. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Ты постоянно пытаешься понять, кто я. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">А я ведь ни разу не говорил, что здесь только один рассказчик. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Полина, если ты это читаешь, закрой страницу. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Хотя нет. </span><time>18:36</time></div>
+<div class="message incoming" data-message=""><span class="message-body">Ты же знаешь, что будет дальше. </span><time>18:36</time></div>
+</div>
+<button aria-label="Заблокировать — кнопка не реагирует" class="outline-button block-contact" data-block="broken">Заблокировать</button>
+<p class="chat-hint">Ну что, листай дальше. Там ещё кое-что…</p>
+</section>
+<section class="scene narrative left-position" data-kind="type">
+<p class="copy typewrite">Так, спокойно, кажется, мы разобрались. Информация о постороннем человеке на сайте оказалась <span class="accent">ложной</span>. Никакого взлома не было, просто из-за перегруженного кода произошёл сбой, и система начала выдавать <span class="accent">некорректные сообщения</span>.</p>
+</section>
+<section class="scene narrative left-position" data-kind="type"><p class="copy typewrite"><span class="accent">Полина</span> только что связалась со мной и подтвердила, что всё под контролем. Больше никаких неожиданных сообщений быть не должно. Теперь можем <span class="accent">спокойно</span> продолжить нашу историю.</p></section>
+<section class="scene narrative right-position" data-kind="type"><p class="copy typewrite">Продолжим. Кстати, сталкинг далеко не всегда начинается с <span class="accent">открытых угроз</span>. Нередко преследование поначалу выглядит как обычное внимание: частые <span class="accent">сообщения</span>, случайные <span class="accent">встречи</span>, <span class="accent">попытки</span> узнать, где человек находится и с кем проводит время. Именно поэтому бывает сложно сразу распознать навязчивое поведение.</p></section>
+<section class="scene narrative left-position" data-kind="type"><p class="copy typewrite">Главный признак сталкинга — систематическое <span class="accent">нарушение личных границ</span>, когда человек продолжает добиваться контакта, несмотря на очевидное нежелание другого общаться.</p></section>
+<section class="scene question-scene" data-kind="choice"><h2 class="question">Дома есть <span class="accent">кто-то</span> посторонний?</h2><div class="choice-buttons"><button class="outline-button" data-choice="">Да</button><button class="outline-button" data-choice="">Нет</button></div><p aria-live="polite" class="choice-confirm"></p></section>
+<section class="scene question-scene" data-kind="choice"><h2 class="question"><span class="accent">Кто-то</span> сейчас есть в твоём шкафу?</h2><div class="choice-buttons"><button class="outline-button" data-choice="">Да</button><button class="outline-button" data-choice="">Нет</button></div><p aria-live="polite" class="choice-confirm"></p></section>
+<section class="scene countdown-scene final-choice" data-kind="countdown" data-seconds="10"><h2 class="countdown-heading">У тебя есть <span class="accent" data-clock="">10</span> секунд, чтобы:</h2><div class="choice-buttons"><button class="outline-button" data-final-choice="">Спрятаться</button><button class="outline-button" data-final-choice="">Бежать</button><button class="outline-button" data-final-choice="">Закричать</button></div><p aria-live="polite" class="choice-confirm"></p></section>
+<section class="scene narrative left-position" data-kind="type"><p class="copy typewrite">Знаешь, самое забавное во всём этом? Неважно, какой вариант ты выберешь. Ты ведь правда думаешь, что от твоих решений что-то зависит? Что ты можешь изменить ход событий, избежать опасности? Нет. Это просто сайт. Набор картинок, текста и строчек кода. Здесь ничего не может тебе навредить. Ты в любой момент можешь закрыть вкладку и вернуться к своей обычной жизни.</p></section>
+<section class="scene narrative left-position ending" data-kind="type"><p class="copy typewrite">Правда, есть одна маленькая деталь, которую я так и не объяснил. Сайт действительно перестанет за тобой следить, когда ты его закроешь. <span class="accent">А вот я — не обещала:)</span></p><p class="end-note">Конец?</p><button type="button" class="outline-button return-top" id="returnTop">Вернуться наверх ↑</button></section>
+</main>
+<div aria-hidden="true" id="navPrompt"><span>Листай-листай дальше</span><i></i></div>
+<div aria-live="polite" class="sr-only" id="srStatus" role="status"></div>
+<audio id="notifyAudio" preload="auto" src="assets/notification.mp3"></audio>
+</body>
+</html>
