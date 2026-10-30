@@ -179,22 +179,21 @@
 <section class="scene question-scene" data-kind="choice"><h2 class="question"><span class="accent">Кто-то</span> сейчас есть в твоём шкафу?</h2><div class="choice-buttons"><button class="outline-button" data-choice="">Да</button><button class="outline-button" data-choice="">Нет</button></div><p aria-live="polite" class="choice-confirm"></p></section>
 <section class="scene countdown-scene final-choice" data-kind="countdown" data-seconds="10"><h2 class="countdown-heading">У тебя есть <span class="accent" data-clock="">10</span> секунд, чтобы:</h2><div class="choice-buttons"><button class="outline-button" data-final-choice="">Спрятаться</button><button class="outline-button" data-final-choice="">Бежать</button><button class="outline-button" data-final-choice="">Закричать</button></div><p aria-live="polite" class="choice-confirm"></p></section>
 <section class="scene narrative left-position" data-kind="type"><p class="copy typewrite">Знаешь, самое забавное во всём этом? Неважно, какой вариант ты выберешь. Ты ведь правда думаешь, что от твоих решений что-то зависит? Что ты можешь изменить ход событий, избежать опасности? Нет. Это просто сайт. Набор картинок, текста и строчек кода. Здесь ничего не может тебе навредить. Ты в любой момент можешь закрыть вкладку и вернуться к своей обычной жизни.</p></section>
-<section class="scene narrative left-position ending" data-kind="type"><p class="copy typewrite">Правда, есть одна маленькая деталь, которую я так и не объяснил. Сайт действительно перестанет за тобой следить, когда ты его закроешь. <span class="accent">А вот я — не обещала:)</span></p><p class="end-note">Конец?</p><button type="button" class="outline-button return-top" id="returnTop">Вернуться наверх ↑</button></section>
+<section class="scene narrative left-position ending" data-kind="type"><p class="copy typewrite">Правда, есть одна маленькая деталь, которую я так и не объяснил. Сайт действительно перестанет за тобой следить, когда ты его закроешь. <span class="accent">А вот я — не обещала:)</span></p><p class="end-note">Конец?</p><div class="ending-actions"><button type="button" class="outline-button" id="returnTop">Вернуться наверх ↑</button></div></section>
 
-<!-- Веб-ринг: самостоятельный финальный экран, доступный после развязки прокруткой. -->
-<section class="scene web-ring-scene" data-kind="web-ring" aria-label="Веб-ринг и навигация по проектам">
-  <footer class="web-ring">
-    <div class="web-ring-container">
-      <h2 class="web-ring-title">Веб-ринг</h2>
-      <nav class="web-ring-links" aria-label="Навигация по работам">
-        <a href="https://stasikola.github.io/brainrot/" target="_blank" rel="noopener noreferrer">← Brainrot — Stasikola</a>
-        <a href="https://conclaveobscurum.ru/soyalice/" target="_blank" rel="noopener noreferrer">Все проекты</a>
-        <a href="https://ninochekh.github.io/black-parade/" target="_blank" rel="noopener noreferrer">Black Parade — Ninochekh →</a>
-      </nav>
-    </div>
-  </footer>
-</section>
 </main>
+<!-- Статичный веб-ринг: находится в обычном потоке документа ПОСЛЕ истории. -->
+<footer class="web-ring" id="webRing" aria-label="Веб-ринг и навигация по проектам">
+  <div class="web-ring-container">
+    <h2 class="web-ring-title">Веб-ринг</h2>
+    <nav class="web-ring-links" aria-label="Навигация по работам">
+      <a href="https://stasikola.github.io/brainrot/" target="_blank" rel="noopener noreferrer">← Предыдущий проект — Хомякова Анастасия — «Мозг. Гниёт. Красиво.»</a>
+      <a href="https://conclaveobscurum.ru/soyalice/" target="_blank" rel="noopener noreferrer">Все проекты</a>
+      <a href="https://ninochekh.github.io/black-parade/" target="_blank" rel="noopener noreferrer">Следующий проект — Чехерия Нино — «The Black Parade» →</a>
+    </nav>
+  </div>
+</footer>
+
 <div aria-hidden="true" id="navPrompt"><span>Листай-листай дальше</span><i></i></div>
 <div aria-live="polite" class="sr-only" id="srStatus" role="status"></div>
 <audio id="notifyAudio" preload="auto" src="assets/notification.mp3"></audio>

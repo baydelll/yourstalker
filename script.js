@@ -40,7 +40,7 @@
     pending.forEach(id => clearTimeout(id));
     pending = [];
   }
-  function showPrompt(show = true) { navPrompt.classList.toggle('visible', show && index < scenes.length - 1); }
+  function showPrompt(show = true) { navPrompt.classList.toggle('visible', show && index < scenes.length - 1 && !active?.classList.contains('ending')); }
   function announce(message) { srStatus.textContent = message; }
   function playSound() {
     if (isMuted) return;
@@ -225,6 +225,8 @@
     showPrompt(false);
     const scene = active;
     const kind = scene.dataset.kind;
+    document.body.classList.toggle('footer-ready', scene.classList.contains('ending'));
+    if (!scene.classList.contains('ending')) window.scrollTo(0,0);
     if (kind === 'hero') {
       startEyeGlitch();
       later(() => showNotification(scene), 4000);
@@ -323,7 +325,8 @@
     if ((kind === 'sequence' || kind === 'paired') && !sequenceFinished) return;
     if (typing) return;
     if (kind === 'type' || kind === 'sequence' || kind === 'paired') {
-      if (scrollToConfirm++ === 0) {showPrompt(true);return;}
+      // На финальной сцене переход к веб-рингу происходит сразу по свайпу.
+      if (!active.classList.contains('ending') && scrollToConfirm++ === 0) {showPrompt(true);return;}
     }
     next();
   }
@@ -443,6 +446,8 @@
 
   window.addEventListener('wheel', event => {
     if (event.ctrlKey) return;
+    // После финала браузер прокручивает обычный HTML-подвал самостоятельно.
+    if (active.classList.contains('ending') && (event.deltaY > 0 || window.scrollY > 0)) return;
     event.preventDefault();
     const now = performance.now();
     if (now - lastWheelAt > 310) wheelDelta = 0;
@@ -460,12 +465,13 @@
     const dy = touchStart.y - (event.changedTouches[0]?.clientY || 0);
     touchStart = null;
     if (Math.abs(dy) < 32) return;
+    if (active.classList.contains('ending') && (dy > 0 || window.scrollY > 0)) return;
     if (dy > 0) forward(); else backwards();
   }, {passive:true});
   document.addEventListener('keydown', event => {
     if (['BUTTON','INPUT','TEXTAREA'].includes(document.activeElement?.tagName)) return;
-    if (['ArrowDown','PageDown',' '].includes(event.key)) {event.preventDefault();forward();}
-    else if (['ArrowUp','PageUp'].includes(event.key)) {event.preventDefault();backwards();}
+    if (['ArrowDown','PageDown',' '].includes(event.key)) {if(active.classList.contains('ending')) return; event.preventDefault();forward();}
+    else if (['ArrowUp','PageUp'].includes(event.key)) {if(active.classList.contains('ending') && window.scrollY > 0) return; event.preventDefault();backwards();}
   });
   // Визуальная высота сцены следует за браузерным viewport при открытии мобильной адресной строки.
   window.addEventListener('resize', updateStep, {passive:true});
